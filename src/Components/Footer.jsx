@@ -29,12 +29,13 @@ const Footer = () => {
 
         <VStack >
           <Avatar boxSize={"28"} mt={["4", "2"] } src={avatarSrc} />
-          <Text>Our Founder</Text>
+          <Text>Our Founder -- Chandan Jha</Text>
         </VStack>
       </Stack>
 
       <Stack direction={["column" , "row"]} >
-        <Text>Copyright reserved 2023 </Text>       
+        <Text>Copyright reserved @ 2023 </Text> 
+
       </Stack>
     </Box>
   );

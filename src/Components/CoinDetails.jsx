@@ -26,21 +26,33 @@ const CoinDetails = () => {
 
   useEffect(() => {
     const fetchCoin = async () => {
-      try {
-        const { data } = await axios.get(`${server}/coins/${params.id}`);
-        const { data: chartData } = await axios.get(
-          `${server}/coins/${params.id}/market_chart?vs_currency=${currency}&days=${days}`
-        );
-        setCoin(data);
-        setChartArray(chartData.prices);
-        setLoading(false);
-        
-      } catch (error) {
-        setLoading(false);
-        setError(true);
-      }
-    };
+  try {
+    const response = await fetch(`https://api.coingecko.com/api/v3/coins/${params.id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+    const data = await response.json();
 
+    const chartResponse = await fetch(
+      `https://api.coingecko.com/api/v3/coins/${params.id}/market_chart?vs_currency=${currency}&days=${days}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      }
+    );
+    const chartData = await chartResponse.json();
+
+    setCoin(data);
+    setChartArray(chartData.prices);
+    setLoading(false);
+  } catch (error) {
+    setLoading(false);
+    setError(true);
+  }
+};
     fetchCoin();
 
   }, [params.id ,currency,days]);
